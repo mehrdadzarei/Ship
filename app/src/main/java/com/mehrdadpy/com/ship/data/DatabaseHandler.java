@@ -28,8 +28,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String CREATE_TABLE = "CREATE TABLE " + Constants.TABLE_NAME + "(" +
                 Constants.KEY_ID + " INTEGER PRIMARY KEY, " + Constants.SHIP_NAME + " TEXT, " +
-                Constants.SHIP_LAT + " FLOAT, " + Constants.SHIP_LONG + " FLOAT, " +
-                Constants.DATE_NAME + " LONG);";
+                Constants.SHIP_TITLE + " TEXT, " + Constants.SHIP_LAT + " FLOAT, " +
+                Constants.SHIP_LONG + " FLOAT, " + Constants.DATE_NAME + " LONG);";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -47,6 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(Constants.SHIP_NAME, ship.getShipName());
+        values.put(Constants.SHIP_TITLE, ship.getShipTitle());
         values.put(Constants.SHIP_LAT, ship.getLat());
         values.put(Constants.SHIP_LONG, ship.getLon());
         values.put(Constants.DATE_NAME, System.currentTimeMillis());
@@ -62,15 +63,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Constants.TABLE_NAME, new String[]{Constants.KEY_ID, Constants.SHIP_NAME,
-                    Constants.SHIP_LAT, Constants.SHIP_LONG, Constants.DATE_NAME}, null, null, null, null,
-                    Constants.DATE_NAME + " DESC ");
+                    Constants.SHIP_TITLE,Constants.SHIP_LAT, Constants.SHIP_LONG, Constants.DATE_NAME},
+                    null, null, null, null, Constants.DATE_NAME + " DESC ");
 
         if (cursor.moveToFirst())
 
             do {
 
                 Ship ship = new Ship();
+                ship.setShipId(cursor.getColumnIndex(Constants.KEY_ID));
                 ship.setShipName(cursor.getString(cursor.getColumnIndex(Constants.SHIP_NAME)));
+                ship.setShipTitle(cursor.getString(cursor.getColumnIndex(Constants.SHIP_TITLE)));
                 ship.setLat(cursor.getDouble(cursor.getColumnIndex(Constants.SHIP_LAT)));
                 ship.setLon(cursor.getDouble(cursor.getColumnIndex(Constants.SHIP_LONG)));
 

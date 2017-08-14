@@ -10,6 +10,7 @@ public class Constants {
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_NAME = "geographical_points";
     public static final String SHIP_NAME = "name";
+    public static final String SHIP_TITLE = "title";
     public static final String SHIP_LAT = "latitude";
     public static final String SHIP_LONG = "longitude";
     public static final String DATE_NAME = "recorddate";

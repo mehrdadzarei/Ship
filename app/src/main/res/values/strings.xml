@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Ship</string>
     <string name="title_activity_maps">Map</string>
-    <string name="hintSearch">جستجوی کشتی</string>
+    <string name="hintSearch">جستجوی شماره کشتی، مثل 5</string>
 </resources>

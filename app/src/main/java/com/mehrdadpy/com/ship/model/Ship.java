@@ -9,13 +9,16 @@ import java.io.Serializable;
 public class Ship implements Serializable {
 
     private static final long serialVersionUID = 10L;
+    private int shipId;
     private String shipName;
+    private String shipTitle;
     private double lat;
     private double lon;
 
-    public Ship (String shipName, double lat, double lon) {
+    public Ship (String shipName, String shipTitle, double lat, double lon) {
 
         this.shipName = shipName;
+        this.shipName = shipTitle;
         this.lat = lat;
         this.lon = lon;
     }
@@ -28,12 +31,28 @@ public class Ship implements Serializable {
         return serialVersionUID;
     }
 
+    public int getShipId() {
+        return shipId;
+    }
+
+    public void setShipId(int shipId) {
+        this.shipId = shipId;
+    }
+
     public String getShipName() {
         return shipName;
     }
 
     public void setShipName(String shipName) {
         this.shipName = shipName;
+    }
+
+    public String getShipTitle() {
+        return shipTitle;
+    }
+
+    public void setShipTitle(String shipTitle) {
+        this.shipTitle = shipTitle;
     }
 
     public double getLat() {
