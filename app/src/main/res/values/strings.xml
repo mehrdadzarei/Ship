@@ -2,4 +2,16 @@
     <string name="app_name">Ship</string>
     <string name="title_activity_maps">Map</string>
     <string name="hintSearch">جستجوی شماره کشتی، مثل 5</string>
+    <string name="add_title">مشخصات کشتی</string>
+    <string name="add_name">نام</string>
+    <string name="add_origin">مبدا</string>
+    <string name="add_final">مقصد</string>
+    <string name="add_lat">طول</string>
+    <string name="add_lon">عرض</string>
+    <string name="add_type">نوع</string>
+    <string name="add_save">ذخیره</string>
+    <string name="add_cancel">انصراف</string>
+    <string name="trace">مسیر</string>
+    <string name="share">اشتراک</string>
+    <string name="delete">حذف</string>
 </resources>

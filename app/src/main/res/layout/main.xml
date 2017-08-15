@@ -9,7 +9,7 @@
     <include layout="@layout/activity_maps" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nv"
+        android:id="@+id/nvMenu"
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"

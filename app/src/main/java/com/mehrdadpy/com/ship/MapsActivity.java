@@ -3,6 +3,7 @@ package com.mehrdadpy.com.ship;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -44,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Vector<Double> lat = new Vector<>(100,2);
     private Vector<Double> lon = new Vector<>(100,2);
     private Vector<String> idList = new Vector<>(100,2);
-    private Ship ship;
+    private static boolean refresh = false;
 
 //    private List<ItemSlideMenu> listSliding;
 //    private SlidingM
@@ -64,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         searchE = (EditText) findViewById(R.id.sesrchEditText);
         menuB = (Button) findViewById(R.id.menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.dl);
-        navigationView = (NavigationView) findViewById(R.id.nv);
+        navigationView = (NavigationView) findViewById(R.id.nvMenu);
 
         searchB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +137,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void register(){
 
         float zoomLevel;
-        ship = new Ship();
 
         markerPosition = mMap.getCameraPosition().target;
         zoomLevel = mMap.getCameraPosition().zoom;
@@ -163,25 +163,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double curLat = markerPosition.latitude;
                 double curLon = markerPosition.longitude;
                 String id = "Id = " + (lat.size() + 1);
+                Intent intent = new Intent(MapsActivity.this, AddShip.class);
 
-                ship.setShipTitle(id);
-                ship.setLat(curLat);
-                ship.setLon(curLon);
-                db.addShip(ship);
-                lat.add(curLat);
-                lon.add(curLon);
-                idList.add(id);
+                intent.putExtra("lat", curLat);
+                intent.putExtra("lon", curLon);
+                intent.putExtra("id", id);
 
-                mMap.clear();
-
-                for (int i=0; i<lat.size(); i++) {
-
-                    markerPosition = new LatLng(lat.get(i),lon.get(i));
-                    mMap.addMarker(new MarkerOptions().position(markerPosition).title(idList.get(i))
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ship1)));
-                }
+                startActivity(intent);
+                refresh = true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (refresh) {
+
+            refresh = false;
+            refreshData();
+        }
     }
 
     /**
@@ -201,6 +203,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerPosition = new LatLng(32.434765, 53.292645);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition,5.f));
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                Log.d("stat",marker.getTitle());
+                return false;
+            }
+        });
+
         refreshData();
     }
 
@@ -210,6 +221,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lon.clear();
         idList.clear();
         ArrayList<Ship> shipsFromDb = db.getShips();
+
+        mMap.clear();
 
         for (int i = 0; i < shipsFromDb.size(); i++) {
 

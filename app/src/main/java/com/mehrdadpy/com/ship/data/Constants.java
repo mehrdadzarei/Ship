@@ -11,8 +11,11 @@ public class Constants {
     public static final String TABLE_NAME = "geographical_points";
     public static final String SHIP_NAME = "name";
     public static final String SHIP_TITLE = "title";
+    public static final String SHIP_ORIGIN = "origin";
+    public static final String SHIP_FINAL = "final";
     public static final String SHIP_LAT = "latitude";
     public static final String SHIP_LONG = "longitude";
+    public static final String SHIP_TYPE = "type";
     public static final String DATE_NAME = "recorddate";
     public static final String KEY_ID = "_id";
 }

@@ -12,8 +12,11 @@ public class Ship implements Serializable {
     private int shipId;
     private String shipName;
     private String shipTitle;
+    private String shipOrigin;
+    private String shipFinal;
     private double lat;
     private double lon;
+    private String shipType;
 
     public Ship (String shipName, String shipTitle, double lat, double lon) {
 
@@ -55,6 +58,22 @@ public class Ship implements Serializable {
         this.shipTitle = shipTitle;
     }
 
+    public String getShipOrigin() {
+        return shipOrigin;
+    }
+
+    public void setShipOrigin(String shipOrigin) {
+        this.shipOrigin = shipOrigin;
+    }
+
+    public String getShipFinal() {
+        return shipFinal;
+    }
+
+    public void setShipFinal(String shipFinal) {
+        this.shipFinal = shipFinal;
+    }
+
     public double getLat() {
         return lat;
     }
@@ -69,5 +88,13 @@ public class Ship implements Serializable {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public String getShipType() {
+        return shipType;
+    }
+
+    public void setShipType(String shipType) {
+        this.shipType = shipType;
     }
 }
