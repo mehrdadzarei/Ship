@@ -203,12 +203,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerPosition = new LatLng(32.434765, 53.292645);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition,5.f));
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public void onMapLongClick(LatLng latLng) {
 
-                Log.d("stat",marker.getTitle());
-                return false;
+                for (int i = 0; i < lat.size(); i++)
+
+                    if (Math.abs(lat.get(i)-latLng.latitude) < 0.05 && Math.abs(lon.get(i)-latLng.longitude) < 0.05) {
+
+                        Intent intent = new Intent(MapsActivity.this, InfoShip.class);
+
+                        intent.putExtra("id", idList.get(i));
+
+                        startActivity(intent);
+                        refresh = true;
+                        break;
+                    }
             }
         });
 

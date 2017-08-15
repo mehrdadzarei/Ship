@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="com.mehrdadpy.com.ship.InfoShip">
+
+    <ImageView
+        android:id="@+id/im"
+        android:src="@drawable/infoimage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:cropToPadding="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/addName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/im"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
@@ -24,6 +37,7 @@
         android:layout_marginRight="35dp"
         android:layout_marginTop="20dp"
         android:layout_toLeftOf="@+id/addName"
+        android:layout_below="@+id/im"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20dp" />
@@ -154,13 +168,13 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/trace"
+        android:id="@+id/traceB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/addType"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/black"
         android:gravity="right"
         android:text="@string/trace"
@@ -169,13 +183,13 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/share"
+        android:id="@+id/shareB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/addType"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/black"
         android:gravity="left"
         android:text="@string/share"
@@ -184,13 +198,13 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/addCancel"
+        android:id="@+id/delB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/addType"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/black"
         android:gravity="left"
         android:text="@string/delete"

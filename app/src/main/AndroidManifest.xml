@@ -41,7 +41,14 @@
         </activity>
         <activity
             android:name=".AddShip"
-            android:label="مشخصات ورودی">
+            android:label="مشخصات ورودی"></activity>
+        <activity
+            android:name=".InfoShip"
+            android:label="مشخصات کشتی">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InfoShip"/>
         </activity>
     </application>
 

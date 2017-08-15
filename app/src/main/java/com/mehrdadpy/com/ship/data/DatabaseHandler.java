@@ -60,6 +60,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteShip (String i) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Constants.TABLE_NAME, Constants.SHIP_TITLE + " = ?",
+                new String[]{i});
+
+        db.close();
+    }
+
     public ArrayList<Ship> getShips() {
 
         shipList.clear();
