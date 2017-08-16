@@ -1,5 +1,6 @@
 package com.mehrdadpy.com.ship;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,11 @@ public class InfoShip extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent();
+
+                intent.putExtra("id", getId);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
 

@@ -1,6 +1,8 @@
 package com.mehrdadpy.com.ship;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mehrdadpy.com.ship.data.DatabaseHandler;
 import com.mehrdadpy.com.ship.model.ItemSlideMenu;
 import com.mehrdadpy.com.ship.model.Ship;
@@ -46,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Vector<Double> lon = new Vector<>(100,2);
     private Vector<String> idList = new Vector<>(100,2);
     private static boolean refresh = false;
+    private static boolean tracing = false;
 
 //    private List<ItemSlideMenu> listSliding;
 //    private SlidingM
@@ -162,7 +166,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 markerPosition = marker.getPosition();
                 double curLat = markerPosition.latitude;
                 double curLon = markerPosition.longitude;
-                String id = "Id = " + (lat.size() + 1);
+                int max = 0;
+                String id;
+
+                for (int i = 0; i < idList.size(); i++)
+                    max = Math.max(max, Integer.parseInt(idList.get(i).substring(5)));
+
+                id = "Id = " + (max + 1);
+
                 Intent intent = new Intent(MapsActivity.this, AddShip.class);
 
                 intent.putExtra("lat", curLat);
@@ -184,6 +195,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             refresh = false;
             refreshData();
         }
+
+        if (tracing) {
+
+            tracing = false;
+            tracingData();
+        }
+    }
+
+    private void tracingData() {
+
+        PolylineOptions line = new PolylineOptions().add(new LatLng(27.814650, 51.827649),
+                new LatLng(27.634403, 51.810557), new LatLng(27.448423, 51.783367), new LatLng(27.217233, 51.732872),
+                new LatLng(26.874746, 51.674608), new LatLng(26.625010, 51.282299),new LatLng(26.360806, 51.103623))
+                .width(5).color(Color.RED);
+
+        mMap.addPolyline(line);
+
+        markerPosition = new LatLng(26.360806, 51.103623);
+        mMap.addMarker(new MarkerOptions().position(markerPosition)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ship1)));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition,8.f));
+
+        tracing = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1: {
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    tracing = true;
+                }
+            }
+        }
+
     }
 
     /**
@@ -215,7 +265,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         intent.putExtra("id", idList.get(i));
 
-                        startActivity(intent);
+                        startActivityForResult(intent, 1);
                         refresh = true;
                         break;
                     }
@@ -230,6 +280,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lat.clear();
         lon.clear();
         idList.clear();
+        String origin;
         ArrayList<Ship> shipsFromDb = db.getShips();
 
         mMap.clear();
@@ -239,10 +290,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat.add(shipsFromDb.get(i).getLat());
             lon.add(shipsFromDb.get(i).getLon());
             idList.add(shipsFromDb.get(i).getShipTitle());
+            origin = shipsFromDb.get(i).getShipOrigin();
 
             markerPosition = new LatLng(lat.get(i),lon.get(i));
             mMap.addMarker(new MarkerOptions().position(markerPosition).title(idList.get(i))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ship1)));
+                    .snippet(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.ship1)));
         }
     }
 }
